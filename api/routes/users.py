@@ -3,12 +3,13 @@ from ..schemas import User,db, UserResponse
 from fastapi.encoders import jsonable_encoder
 from ..utils import get_password_hash
 import secrets
+from ..send_mail import send_registration_mail
 
 router = APIRouter(
     tags=["User Routes"],
 )
 
-@router.post("/registration", response_description="User registration")
+@router.post("/registration", response_description="User registration", response_model=UserResponse)
 async def registration(user: User):
     user = jsonable_encoder(user)
     
@@ -29,5 +30,12 @@ async def registration(user: User):
 
     new_user = await db['users'].insert_one(user)
     created_user = await db['users'].find_one({"_id": new_user.inserted_id})
+
+    #send mail
+    await send_registration_mail("Regisreation Successful", user["email"],{
+        "title":"Registration Successful",
+        "name": user["name"],
+    })
+
 
     return created_user
