@@ -1,0 +1,63 @@
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+**/venv/
+
+# Environment variables
+.env
+*.env
+
+# Python Egg
+*.egg-info/
+*.egg
+
+# Distribution / packaging
+build/
+dist/
+.eggs/
+*.whl
+
+# IDEs and editors
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# macOS
+.DS_Store
+
+# Logs and databases
+*.log
+*.sqlite3
+
+# Uvicorn reload files
+*.reload
+
+# Pytest cache
+.pytest_cache/
+
+# Coverage reports
+doccov_html/
+htmlcov/
+.coverage
+.coverage.*
+
+# MyPy
+.mypy_cache/
+
+# Pydantic output
+pydantic_cache/
+
+# Misc
+*.bak
+*.tmp
+
+# Static and media (if any)
+staticfiles/
+media/
+
+# JetBrains
+*.iml
