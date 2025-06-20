@@ -47,3 +47,14 @@ async def password_reset(subject: str, email_to: str, body: dict):
     
     fm = FastMail(conf)
     await fm.send_message(message, template_name='password_reset.html')
+
+async def send_verification_otp(subject: str, email_to: str, body: dict):
+    message = MessageSchema(
+        subject=subject,
+        recipients=[email_to],
+        template_body=body,
+        subtype="html",
+    )
+
+    fm = FastMail(conf)
+    await fm.send_message(message=message, template_name="otp_verification.html")

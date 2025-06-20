@@ -25,8 +25,6 @@ async def reset_request(user_email: PasswordResetRequest):
 
         reset_link = f"http://localhost:8000/reset?token={token}"
 
-        print("Hello")
-
         await password_reset("Password Reset", user["email"],
             {
                 "title": "Password Reset",

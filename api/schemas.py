@@ -68,6 +68,7 @@ class UserResponse(BaseModel):
     id: PyObjectId = Field(default_factory=PyObjectId, alias="_id")
     name: str = Field(...)
     email: EmailStr = Field(...)
+    verified: Optional[bool] = Field(default=False)
 
     model_config = {
         "populate_by_name": True,
@@ -137,3 +138,13 @@ class PasswordResetRequest(BaseModel):
 
 class PasswordReset(BaseModel):
     password: str = Field(...)
+
+class OtpVerification(BaseModel):
+    otp: str = Field(..., min_length=6, max_length=6, description="6-digit OTP code as string")
+    user_id: str = Field(...)
+
+class OtpRequest(BaseModel):
+    otp: int = Field(..., ge=100000, le=999999, description="6-digit OTP code")
+
+class OtpResponse(BaseModel):
+    message: str = Field(..., description="Response message indicating success or failure of OTP verification")
