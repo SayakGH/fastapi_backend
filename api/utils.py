@@ -7,3 +7,7 @@ def verify_password(plain_password, hashed_password):
 
 def get_password_hash(password):
     return pwd_context.hash(password)
+
+def otp_gen():
+    import random
+    return str(random.randint(100000, 999999)) 
