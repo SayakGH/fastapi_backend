@@ -1,4 +1,5 @@
 import os
+from typing import Optional
 from dotenv import load_dotenv
 from bson import ObjectId
 from pydantic import BaseModel, Field, EmailStr
@@ -80,3 +81,59 @@ class UserResponse(BaseModel):
         }
     }
 
+class BlogContent(BaseModel):
+    id: PyObjectId = Field(default_factory=PyObjectId, alias="_id")
+    title: str = Field(...)
+    body: str = Field(...)
+
+    class Config:
+        arbitrary_types_allowed = True
+        json_encoders = {ObjectId: str}
+        schema_extra = {
+            "example": {
+                "title": "blog title",
+                "body": "blog content",
+                "auther_name": "name of the auther",
+                "auther_id": "ID of the auther",
+                "created_at": "Date of blog creation"
+            }
+        }
+
+
+class BlogContentResponse(BaseModel):
+    id: PyObjectId = Field(default_factory=PyObjectId, alias="_id")
+    title: str = Field(...)
+    body: str = Field(...)
+    author_name: str = Field(...)
+    author_id: str = Field(...)
+    created_at: str = Field(...)
+
+    class Config:
+        arbitrary_types_allowed = True
+        json_encoders = {ObjectId: str}
+        schema_extra = {
+            "example": {
+                "title": "blog title",
+                "body": "blog content",
+                "auther_name": "name of the auther",
+                "auther_id": "ID of the auther",
+                "created_at": "Date of blog creation"
+            }
+        }
+
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
+
+class TokenData(BaseModel):
+    id: str
+
+
+class PasswordResetRequest(BaseModel):
+    email: EmailStr = Field(...)
+
+
+class PasswordReset(BaseModel):
+    password: str = Field(...)

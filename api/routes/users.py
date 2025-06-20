@@ -1,9 +1,11 @@
-from fastapi import APIRouter, HTTPException, status
-from ..schemas import User,db, UserResponse
+from fastapi import APIRouter, Depends, HTTPException, status
+from ..schemas import User,db, UserResponse,TokenData
 from fastapi.encoders import jsonable_encoder
 from ..utils import get_password_hash
 import secrets
 from ..send_mail import send_registration_mail
+from ..Oauth2 import get_current_user
+from bson import ObjectId
 
 router = APIRouter(
     tags=["User Routes"],
@@ -39,3 +41,15 @@ async def registration(user: User):
 
 
     return created_user
+
+@router.get("/details", response_model=UserResponse)
+async def details(current_user: TokenData = Depends(get_current_user)):
+    # current_user.id is a string; convert if your DB uses ObjectId
+    user = await db["users"].find_one({"_id": current_user.id})
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="User not found"
+        )
+    user = jsonable_encoder(user)
+    return user

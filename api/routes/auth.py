@@ -3,7 +3,7 @@ from fastapi import APIRouter, HTTPException, status
 from pydantic import BaseModel
 from ..schemas import db
 import api.utils as utils
-from ..Oath2 import create_access_token
+from ..Oauth2 import create_access_token
 
 router = APIRouter(
     prefix="/login",
